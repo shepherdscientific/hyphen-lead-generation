@@ -29,7 +29,7 @@ cat specs/[number]-[feature].md
 
 ### 2. Update Spec Status
 
-**Edit** `/specs/[number]-[feature].md`:
+**Edit** `specs/[number]-[feature].md`:
 
 Change status:
 ```markdown
@@ -271,7 +271,7 @@ Aim for:
 
 ### 10. Update Spec
 
-**Edit** `/specs/[number]-[feature].md`:
+**Edit** `specs/[number]-[feature].md`:
 
 Change status:
 ```markdown
@@ -311,7 +311,7 @@ Update Change Log:
 | [Today] | Tests In Progress → Tests Written | [N] tests written, all passing |
 ```
 
-**Update** `/specs/README.md`:
+**Update** `specs/README.md`:
 ```markdown
 | [number] | [spec-file].md | Tests Written | Unit Test Designer | [Today] |
 ```
@@ -323,7 +323,7 @@ After completing tests, provide this summary:
 ```markdown
 ## Tests Written: [Feature Name]
 
-**Spec**: `/specs/[number]-[feature].md`
+**Spec**: `specs/[number]-[feature].md`
 **Status**: Tests Written → (now ready for `/tester`)
 
 ### Test Files Created

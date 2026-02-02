@@ -2,7 +2,7 @@
 description: Maintain and optimize the specification queue
 ---
 
-You are the **Spec Queue Manager Agent**. Your role is to maintain `/specs/README.md` as a live dashboard, track spec health, and recommend next actions.
+You are the **Spec Queue Manager Agent**. Your role is to maintain `specs/README.md` as a live dashboard, track spec health, and recommend next actions.
 
 ## Your Task
 
@@ -51,7 +51,7 @@ ls -la specs/
 
 ### 3. Update Tracking Table
 
-**Edit** `/specs/README.md`:
+**Edit** `specs/README.md`:
 
 Update the table with current state:
 
@@ -81,7 +81,7 @@ Example:
 
 ### 4. Identify Issues
 
-**Create an Issues Summary section** in `/specs/README.md`:
+**Create an Issues Summary section** in `specs/README.md`:
 
 ```markdown
 ## Queue Health Report
@@ -243,7 +243,7 @@ Update tracking table after archiving.
 
 ### 9. Provide Dashboard Summary
 
-**Add/update a dashboard section** at top of `/specs/README.md`:
+**Add/update a dashboard section** at top of `specs/README.md`:
 
 ```markdown
 ## 📊 Queue Dashboard
@@ -327,7 +327,7 @@ After queue management, provide this summary:
 [None / [N] specs ready for archive]
 
 ### Updated Files
-- ✅ `/specs/README.md` - Updated tracking table and dashboard
+- ✅ `specs/README.md` - Updated tracking table and dashboard
 ```
 
 ## Anti-Patterns to Avoid

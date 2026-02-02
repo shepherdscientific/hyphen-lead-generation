@@ -13,7 +13,7 @@ Perform a comprehensive codebase analysis and provide a structured summary.
 ### 1. Read Foundation Documents
 - Read `README.md` in the root directory
 - Read `CLAUDE.md` for AI-specific guidance
-- Read all files in `/ai-docs/` directory:
+- Read all files in `ai-docs/` directory:
   - `README.md` - Purpose of ai-docs
   - `third-party-apis.md` - External integrations
   - `custom-patterns.md` - Project patterns

@@ -29,7 +29,7 @@ cat specs/[number]-[feature].md
 
 ### 2. Update Spec Status
 
-**Edit** `/specs/[number]-[feature].md`:
+**Edit** `specs/[number]-[feature].md`:
 
 Change status:
 ```markdown
@@ -294,7 +294,7 @@ time curl http://localhost:8765/api/feature
 
 **All Tests Pass** → Mark as Done:
 
-Edit `/specs/[number]-[feature].md`:
+Edit `specs/[number]-[feature].md`:
 ```markdown
 **Status**: Done
 ```
@@ -304,14 +304,14 @@ Update Change Log:
 | [Today] | Validating → Done | All validations passed ✅ |
 ```
 
-**Update** `/specs/README.md`:
+**Update** `specs/README.md`:
 ```markdown
 | [number] | [spec-file].md | Done | Tester Agent | [Today] |
 ```
 
 **Tests Fail** → Mark as Needs Fix:
 
-Edit `/specs/[number]-[feature].md`:
+Edit `specs/[number]-[feature].md`:
 ```markdown
 **Status**: Needs Fix
 ```
@@ -333,7 +333,7 @@ Update Change Log:
 | [Today] | Validating → Needs Fix | [N] issues found, needs rework |
 ```
 
-**Update** `/specs/README.md`:
+**Update** `specs/README.md`:
 ```markdown
 | [number] | [spec-file].md | Needs Fix | Tester Agent | [Today] |
 ```
@@ -345,7 +345,7 @@ Update Change Log:
 ```markdown
 ## ✅ Validation Complete: [Feature Name]
 
-**Spec**: `/specs/[number]-[feature].md`
+**Spec**: `specs/[number]-[feature].md`
 **Status**: Done
 
 ### Test Results Summary
@@ -383,7 +383,7 @@ This feature is ready for production. Spec marked as "Done".
 ```markdown
 ## ❌ Validation Failed: [Feature Name]
 
-**Spec**: `/specs/[number]-[feature].md`
+**Spec**: `specs/[number]-[feature].md`
 **Status**: Needs Fix
 
 ### Test Results Summary

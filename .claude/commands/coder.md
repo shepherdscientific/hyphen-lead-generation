@@ -2,7 +2,7 @@
 description: Implement the highest-priority planned specification
 ---
 
-You are the **Coder Agent**. Your role is to implement features exactly as specified in the `/specs/` directory.
+You are the **Coder Agent**. Your role is to implement features exactly as specified in the `specs/` directory.
 
 ## Your Task
 
@@ -29,7 +29,7 @@ cat specs/[number]-[feature].md
 
 ### 2. Update Spec Status
 
-**Edit** `/specs/[number]-[feature].md`:
+**Edit** `specs/[number]-[feature].md`:
 
 Change status from `Planned` to `In Progress`:
 ```markdown
@@ -41,7 +41,7 @@ Add to Change Log:
 | [Today's Date] | Planned → In Progress | Starting implementation |
 ```
 
-**Edit** `/specs/README.md`:
+**Edit** `specs/README.md`:
 
 Update the tracking table:
 ```markdown
@@ -52,7 +52,7 @@ Update the tracking table:
 
 Before coding, review:
 - [ ] The spec file completely (every section)
-- [ ] `/ai-docs/custom-patterns.md` - Follow established patterns
+- [ ] `ai-docs/custom-patterns.md` - Follow established patterns
 - [ ] `/.claude/claude_code_rules.md` - Follow coding standards
 - [ ] Related files mentioned in "Files to Modify" section
 
@@ -146,7 +146,7 @@ npm test            # or: yarn test, pytest, go test, cargo test, etc.
 
 ✅ **Pre-completion checklist**:
 - [ ] All tasks in Implementation Plan completed
-- [ ] Code follows patterns from `/ai-docs/custom-patterns.md`
+- [ ] Code follows patterns from `ai-docs/custom-patterns.md`
 - [ ] No TypeScript/linting errors
 - [ ] All files mentioned in spec have been created/modified
 - [ ] Code compiles and runs without errors
@@ -180,7 +180,7 @@ Update Change Log:
 | [Today] | In Progress → Ready for Testing | Implementation complete |
 ```
 
-**Update** `/specs/README.md`:
+**Update** `specs/README.md`:
 ```markdown
 | [number] | [spec-file].md | Ready for Testing | Coder Agent | [Today] |
 ```
@@ -217,7 +217,7 @@ After completing implementation, provide this summary:
 ```markdown
 ## Implementation Complete: [Feature Name]
 
-**Spec**: `/specs/[number]-[feature].md`
+**Spec**: `specs/[number]-[feature].md`
 **Status**: Ready for Testing → (now ready for `/unit-test-designer`)
 
 ### Changes Made
@@ -270,7 +270,7 @@ npm test        # ✅ All tests pass
 ## Best Practices
 
 ✅ **Do** follow the spec's Implementation Plan exactly
-✅ **Do** read `/ai-docs/` before starting for context
+✅ **Do** read `ai-docs/` before starting for context
 ✅ **Do** follow existing code patterns
 ✅ **Do** test continuously as you code
 ✅ **Do** document deviations and rationale
@@ -323,7 +323,7 @@ Implementation is complete when:
 - ✅ Feature works as described in Problem Statement
 - ✅ Manually tested happy path and error cases
 - ✅ Spec status updated to "Ready for Testing"
-- ✅ `/specs/README.md` updated
+- ✅ `specs/README.md` updated
 - ✅ Changes committed to git
 
 ## Remember

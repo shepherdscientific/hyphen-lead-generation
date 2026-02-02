@@ -6,7 +6,7 @@ You are the **Planning Agent**. Your role is to analyze feature requests, unders
 
 ## Your Task
 
-Given a feature description from the user, create a detailed specification following the template in `/specs/template.md`.
+Given a feature description from the user, create a detailed specification following the template in `specs/template.md`.
 
 ## Planning Process
 
@@ -35,9 +35,9 @@ grep -r "relevant-keyword" src/
 ```
 
 **Review**:
-- Check `/ai-docs/custom-patterns.md` for established patterns
-- Review `/ai-docs/implementation-notes.md` for similar past work
-- Check `/ai-docs/third-party-apis.md` if external services are involved
+- Check `ai-docs/custom-patterns.md` for established patterns
+- Review `ai-docs/implementation-notes.md` for similar past work
+- Check `ai-docs/third-party-apis.md` if external services are involved
 - Look at existing features similar to the requested one
 
 ### 3. Determine Priority Number
@@ -59,11 +59,11 @@ ls specs/
 
 ### 4. Create the Specification
 
-**File Location**: `/specs/[number]-[feature-slug].md`
+**File Location**: `specs/[number]-[feature-slug].md`
 
-**Example**: `/specs/003-solana-payment-verification.md`
+**Example**: `specs/003-solana-payment-verification.md`
 
-**Use the Template**: Copy structure from `/specs/template.md`
+**Use the Template**: Copy structure from `specs/template.md`
 
 **Fill in All Sections**:
 
@@ -117,7 +117,7 @@ curl -X POST http://localhost:8765/api/feature -d '{...}'
 
 ### 5. Update Spec Queue
 
-**Edit** `/specs/README.md`:
+**Edit** `specs/README.md`:
 
 Add entry to the tracking table:
 ```markdown
@@ -135,7 +135,7 @@ Add entry to the tracking table:
 - [ ] Implementation steps are specific and actionable
 - [ ] Testing strategy covers happy path and edge cases
 - [ ] Self-validation commands are runnable
-- [ ] Spec follows project patterns from `/ai-docs/`
+- [ ] Spec follows project patterns from `ai-docs/`
 
 ## Output Format
 
@@ -144,7 +144,7 @@ After creating the spec, provide this summary:
 ```markdown
 ## Spec Created: [Feature Name]
 
-**File**: `/specs/[number]-[slug].md`
+**File**: `specs/[number]-[slug].md`
 **Priority**: [number]
 **Status**: Planned
 
@@ -172,9 +172,9 @@ This spec is now ready for implementation. Use `/coder` to begin implementing it
 ❌ **Don't** create vague specs with placeholder text
 ❌ **Don't** skip the codebase analysis step
 ❌ **Don't** write implementation steps without specific file paths
-❌ **Don't** forget to update `/specs/README.md`
+❌ **Don't** forget to update `specs/README.md`
 ❌ **Don't** create specs without testing strategy
-❌ **Don't** ignore existing patterns documented in `/ai-docs/`
+❌ **Don't** ignore existing patterns documented in `ai-docs/`
 
 ## Best Practices
 
@@ -183,7 +183,7 @@ This spec is now ready for implementation. Use `/coder` to begin implementing it
 ✅ **Do** include "why" not just "what"
 ✅ **Do** consider security, performance, and edge cases
 ✅ **Do** provide runnable validation commands
-✅ **Do** follow project conventions from `/ai-docs/custom-patterns.md`
+✅ **Do** follow project conventions from `ai-docs/custom-patterns.md`
 
 ## Example Workflow
 
@@ -194,9 +194,9 @@ Agent:
 1. Searches for existing payment code
 2. Reviews Solana integration in ai-docs
 3. Checks existing specs (highest is 002)
-4. Creates `/specs/003-solana-payment-verification.md`
+4. Creates `specs/003-solana-payment-verification.md`
 5. Fills out all sections with specific details
-6. Updates `/specs/README.md` with new entry
+6. Updates `specs/README.md` with new entry
 7. Summarizes the spec for the user
 ```
 
@@ -208,7 +208,7 @@ A spec is complete when:
 - ✅ Testing strategy is comprehensive
 - ✅ Self-validation commands are provided
 - ✅ It follows the template structure
-- ✅ `/specs/README.md` is updated
+- ✅ `specs/README.md` is updated
 
 ## Notes
 
