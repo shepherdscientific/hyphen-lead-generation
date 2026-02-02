@@ -17,7 +17,6 @@ Each specification in this directory is not just documentation—it's an **execu
 
 | # | Spec File | Status | Assigned Agent | Last Updated |
 |---|-----------|--------|----------------|--------------|
-| 001 | 001-ai-lead-generation-system.md | Planned | Unassigned | 2026-01-30 |
 | | | | | |
 
 **Status Values**:
