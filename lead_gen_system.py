@@ -101,7 +101,7 @@ class Lead(BaseModel):
     # Company
     company_name: str
     company_domain: Optional[str] = None
-    company_size: Optional[str] = None
+    company_size: Optional[int] = None
     company_industry: Optional[str] = None
     company_location: Optional[str] = None
     
@@ -211,9 +211,9 @@ class Database:
             company_name=lead.company_name,
             company_domain=lead.company_domain,
             title=lead.title,
-            source=lead.source.value,
+            source=lead.source,
             lead_score=lead.lead_score,
-            priority_tier=lead.priority_tier.value if lead.priority_tier else None,
+            priority_tier=lead.priority_tier if lead.priority_tier else None,
             enriched_at=lead.enriched_at,
             synced_to_hubspot_at=lead.synced_to_hubspot_at,
             raw_data=lead.raw_data
@@ -258,32 +258,74 @@ class Database:
 # DATA PARSERS
 # =============================================================================
 
+def sanitize(val):
+    """Normalise a value from a pandas row into something Pydantic accepts.
+
+    With dtype=str + keep_default_na=False:
+      - empty cells  → ''   (we map to None)
+      - present cells → str (Pydantic coerces "5200" → int where the model says int)
+
+    Also handles the legacy case where NaN slips through (e.g. from other parsers).
+    """
+    if val is None or val == '':
+        return None
+    try:
+        if pd.isna(val):          # catches float NaN / NaT
+            return None
+    except (ValueError, TypeError):
+        pass                      # pd.isna blows up on lists/dicts — those are fine
+    return val
+
+
 class ApolloParser:
     """Parse Apollo.io CSV exports"""
     
     @staticmethod
     def parse(file_path: str) -> List[Lead]:
         """Parse Apollo CSV file"""
-        df = pd.read_csv(file_path)
+        # dtype=str  → nothing gets silently cast to float (kills the phone bug)
+        # keep_default_na=False → empty cells arrive as '' not NaN
+        df = pd.read_csv(file_path, dtype=str, keep_default_na=False)
         leads = []
         
         for _, row in df.iterrows():
             try:
+                # ── phone: Corporate Phone is most populated; fall back down the list
+                phone = (sanitize(row.get('Corporate Phone'))
+                      or sanitize(row.get('Company Phone'))
+                      or sanitize(row.get('Work Direct Phone'))
+                      or sanitize(row.get('Mobile Phone'))
+                      or sanitize(row.get('Other Phone')))
+
+                # ── location: prefer company address over personal
+                city    = sanitize(row.get('Company City'))    or sanitize(row.get('City'))
+                country = sanitize(row.get('Company Country')) or sanitize(row.get('Country'))
+                location = f"{city}, {country}" if city and country else (city or country)
+
                 lead = Lead(
-                    first_name=row.get('First Name', ''),
-                    last_name=row.get('Last Name', ''),
-                    email=row.get('Email', None),
-                    phone=row.get('Phone', None),
-                    company_name=row.get('Company', ''),
-                    company_domain=row.get('Website', None),
-                    company_size=row.get('# Employees', None),
-                    company_industry=row.get('Industry', None),
-                    company_location=row.get('City', None),
-                    title=row.get('Title', None),
-                    seniority=row.get('Seniority', None),
-                    linkedin_url=row.get('LinkedIn Url', None),
-                    source=LeadSource.APOLLO,
-                    raw_data=row.to_dict()
+                    # required str fields – `or ''` so sanitize(empty) -> None -> ''
+                    first_name   =sanitize(row.get('First Name'))    or '',
+                    last_name    =sanitize(row.get('Last Name'))     or '',
+                    company_name =sanitize(row.get('Company Name'))  or '',
+
+                    # optional fields (None is fine)
+                    email            =sanitize(row.get('Email')),
+                    phone            =phone,
+                    company_domain   =sanitize(row.get('Website')),
+                    company_size     =sanitize(row.get('# Employees')),
+                    company_industry =sanitize(row.get('Industry')),
+                    company_location =location,
+                    title            =sanitize(row.get('Title')),
+                    seniority        =sanitize(row.get('Seniority')),
+                    department       =sanitize(row.get('Departments')),
+
+                    # social / identifiers
+                    linkedin_url     =sanitize(row.get('Person Linkedin Url')),
+                    twitter_url      =sanitize(row.get('Twitter Url')),
+                    source           =LeadSource.APOLLO,
+                    source_id        =sanitize(row.get('Apollo Contact Id')),
+
+                    raw_data={k: sanitize(v) for k, v in row.to_dict().items()}
                 )
                 leads.append(lead)
             except Exception as e:
@@ -299,23 +341,22 @@ class LinkedInParser:
     @staticmethod
     def parse(file_path: str) -> List[Lead]:
         """Parse LinkedIn CSV file"""
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path, dtype=str, keep_default_na=False)
         leads = []
         
         for _, row in df.iterrows():
             try:
-                # LinkedIn has different column names
-                full_name = row.get('Name', '')
+                full_name = sanitize(row.get('Name', '')) or ''
                 name_parts = full_name.split(' ', 1)
                 
                 lead = Lead(
                     first_name=name_parts[0] if len(name_parts) > 0 else '',
                     last_name=name_parts[1] if len(name_parts) > 1 else '',
-                    company_name=row.get('Company', ''),
-                    title=row.get('Position', None),
-                    linkedin_url=row.get('Profile URL', None),
+                    company_name=sanitize(row.get('Company', '')) or '',
+                    title=sanitize(row.get('Position')),
+                    linkedin_url=sanitize(row.get('Profile URL')),
                     source=LeadSource.LINKEDIN,
-                    raw_data=row.to_dict()
+                    raw_data={k: sanitize(v) for k, v in row.to_dict().items()}
                 )
                 leads.append(lead)
             except Exception as e:
@@ -506,12 +547,8 @@ Output as JSON:
         
         # Company size
         if lead.company_size:
-            try:
-                size = int(lead.company_size.split('-')[0])
-                if 10 <= size <= 500:
-                    score += 20
-            except:
-                pass
+            if 10 <= lead.company_size <= 500:
+                score += 20
         
         # Has LinkedIn
         if lead.linkedin_url:
@@ -574,9 +611,9 @@ class HubSpotSync:
         if lead.lead_score is not None:
             properties['lead_score__c'] = lead.lead_score
         if lead.priority_tier:
-            properties['priority_tier__c'] = lead.priority_tier.value
+            properties['priority_tier__c'] = lead.priority_tier
         if lead.source:
-            properties['lead_source__c'] = lead.source.value
+            properties['lead_source__c'] = lead.source
         if lead.linkedin_url:
             properties['linkedin_url__c'] = lead.linkedin_url
         
